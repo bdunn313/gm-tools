@@ -1,0 +1,22 @@
+{
+  "name": "gm-tools",
+  "version": "0.0.1",
+  "bin": "./src/Main.bs.js",
+  "scripts": {
+    "build": "rescript",
+    "postbuild": "./prepare-main.js",
+    "clean": "rescript clean -with-deps",
+    "start": "rescript build -w"
+  },
+  "keywords": [
+    "rescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "rescript": "^9.1.4"
+  },
+  "devDependencies": {
+    "prepend-file": "^2.0.0"
+  }
+}
