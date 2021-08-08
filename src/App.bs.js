@@ -5,9 +5,19 @@ var Ink = require("rescript-ink/src/Ink.bs.js");
 var Ink$1 = require("ink");
 var Curry = require("rescript/lib/js/curry.js");
 var React = require("react");
+var Minimist = require("minimist");
+var Belt_Array = require("rescript/lib/js/belt_Array.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
 var Ink_Components_Box = require("rescript-ink/src/Ink_Components_Box.bs.js");
 var Ink_Components_Text = require("rescript-ink/src/Ink_Components_Text.bs.js");
+
+function App$Help(Props) {
+  return React.createElement(Ink$1.Box, Ink_Components_Box.makeProps(undefined, Caml_option.some(null), "flex", undefined, undefined, undefined, "column", undefined, "center", undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined), React.createElement(Ink$1.Text, Ink_Components_Text.makeProps(undefined, undefined, undefined, undefined, true, undefined, undefined, undefined, undefined, undefined, "GM Tools", undefined)), React.createElement(Ink$1.Text, Ink_Components_Text.makeProps(undefined, "blue", undefined, undefined, true, undefined, undefined, undefined, undefined, undefined, "v0.0.1", undefined)), React.createElement(Ink$1.Box, Ink_Components_Box.makeProps(undefined, Caml_option.some(React.createElement(Ink$1.Text, Ink_Components_Text.makeProps(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, "usage: gm-tools [--help] <command> [<args>]", undefined))), "flex", undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, 1, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)), React.createElement(Ink$1.Box, Ink_Components_Box.makeProps(undefined, Caml_option.some(React.createElement(Ink$1.Text, Ink_Components_Text.makeProps(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, "Common commands:", undefined))), "flex", undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, 2, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)), React.createElement(Ink$1.Box, Ink_Components_Box.makeProps(undefined, Caml_option.some(null), "flex", undefined, undefined, undefined, "column", undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, 1, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined), React.createElement(Ink$1.Text, Ink_Components_Text.makeProps(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, "Rolling dice", undefined)), React.createElement(Ink$1.Box, Ink_Components_Box.makeProps(undefined, Caml_option.some(null), "flex", undefined, undefined, undefined, undefined, undefined, "flex-start", undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined), React.createElement(Ink$1.Box, Ink_Components_Box.makeProps(undefined, Caml_option.some(React.createElement(Ink$1.Text, Ink_Components_Text.makeProps(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, "roll", undefined))), "flex", undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, 3, 4, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)), React.createElement(Ink$1.Box, Ink_Components_Box.makeProps(undefined, Caml_option.some(React.createElement(Ink$1.Text, Ink_Components_Text.makeProps(undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, "Roll arbitrary dice as a string.", undefined))), "flex", undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined)))));
+}
+
+var Help = {
+  make: App$Help
+};
 
 function App$Main(Props) {
   var app = Ink.useApp(undefined);
@@ -24,10 +34,28 @@ var Main = {
   make: App$Main
 };
 
-var renderResult = Ink.render(React.createElement(App$Main, {}), undefined, true, undefined, undefined);
+var args = Minimist(Belt_Array.sliceToEnd(process.argv, 2), {
+      boolean: ["help"],
+      alias: {
+        h: "help"
+      }
+    });
+
+var match = args.help;
+
+var componentToRender = match !== undefined ? (
+    match ? React.createElement(App$Help, {}) : React.createElement(App$Main, {})
+  ) : React.createElement(App$Main, {});
+
+console.log(args._);
+
+var renderResult = Ink.render(componentToRender, undefined, true, undefined, undefined);
 
 Curry._1(renderResult.waitUntilExit, undefined);
 
+exports.Help = Help;
 exports.Main = Main;
+exports.args = args;
+exports.componentToRender = componentToRender;
 exports.renderResult = renderResult;
-/* renderResult Not a pure module */
+/* args Not a pure module */
