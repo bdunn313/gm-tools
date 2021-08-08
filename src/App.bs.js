@@ -9,7 +9,7 @@ var Caml_option = require("rescript/lib/js/caml_option.js");
 var Ink_Components_Box = require("rescript-ink/src/Ink_Components_Box.bs.js");
 var Ink_Components_Text = require("rescript-ink/src/Ink_Components_Text.bs.js");
 
-function Main$Main(Props) {
+function App$Main(Props) {
   var app = Ink.useApp(undefined);
   Ink.useInput((function (input, param) {
           if (input === /* 'q' */113) {
@@ -21,15 +21,13 @@ function Main$Main(Props) {
 }
 
 var Main = {
-  make: Main$Main
+  make: App$Main
 };
 
-var match = Ink.render(React.createElement(Main$Main, {}), undefined, true, undefined, undefined);
+var renderResult = Ink.render(React.createElement(App$Main, {}), undefined, true, undefined, undefined);
 
-var waitUntilExit = match.waitUntilExit;
-
-Curry._1(waitUntilExit, undefined);
+Curry._1(renderResult.waitUntilExit, undefined);
 
 exports.Main = Main;
-exports.waitUntilExit = waitUntilExit;
-/* match Not a pure module */
+exports.renderResult = renderResult;
+/* renderResult Not a pure module */

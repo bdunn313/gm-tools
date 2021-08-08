@@ -1,6 +1,4 @@
-# ReScript Project Template
-
-The only official ReScript starter template.
+# GM Tools
 
 ## Installation
 
@@ -11,11 +9,13 @@ npm install
 ## Build
 
 - Build: `npm run build`
+- Build with dependencies: `npm run build:deps`
 - Clean: `npm run clean`
-- Build & watch: `npm run start`
+- Build & watch: `npm start`
 
 ## Run
 
 ```sh
-node src/Demo.bs.js
+npm link
+gm-tools
 ```

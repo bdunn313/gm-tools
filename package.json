@@ -1,11 +1,10 @@
 {
   "name": "gm-tools",
   "version": "0.0.1",
-  "bin": "./src/Main.bs.js",
+  "bin": "./src/main.js",
   "scripts": {
     "build": "rescript",
     "build:deps": "rescript build -with-deps",
-    "postbuild": "./prepare-main.js",
     "clean": "rescript clean -with-deps",
     "start": "rescript build -w"
   },
@@ -20,8 +19,5 @@
     "react-dom": "^16.8.1",
     "rescript": "^9.1.4",
     "rescript-ink": "^1.1.0"
-  },
-  "devDependencies": {
-    "prepend-file": "^2.0.0"
   }
 }
