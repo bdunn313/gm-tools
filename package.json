@@ -4,6 +4,7 @@
   "bin": "./src/Main.bs.js",
   "scripts": {
     "build": "rescript",
+    "build:deps": "rescript build -with-deps",
     "postbuild": "./prepare-main.js",
     "clean": "rescript clean -with-deps",
     "start": "rescript build -w"
@@ -14,7 +15,11 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "rescript": "^9.1.4"
+    "@rescript/react": "^0.10.3",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "rescript": "^9.1.4",
+    "rescript-ink": "^1.1.0"
   },
   "devDependencies": {
     "prepend-file": "^2.0.0"
