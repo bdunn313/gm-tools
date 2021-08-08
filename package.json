@@ -2,6 +2,7 @@
   "name": "gm-tools",
   "version": "0.0.1",
   "bin": "./src/main.js",
+  "repository": "github:bdunn313/gm-tools",
   "scripts": {
     "build": "rescript",
     "build:deps": "rescript build -with-deps",
