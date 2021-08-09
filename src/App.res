@@ -1,5 +1,7 @@
 open Ink
 
+let debugMode = true
+
 type argv = array<string>
 type process = {argv: argv}
 @val external proc: process = "process"
@@ -11,9 +13,22 @@ type parseArgsOpts = {
 }
 type parsedArgs = {
   @as("_") params: array<string>,
-  help: option<bool>,
+  help: bool,
 }
 @module external parseArgs: (argv, ~opts: parseArgsOpts=?, unit) => parsedArgs = "minimist"
+
+module Debugger = {
+  @react.component
+  let make = (~args) =>
+    switch debugMode {
+    | true =>
+      <Box display=#flex marginTop=6>
+        <Text color=#red dimColor=true> {React.string("Debug Info")} </Text>
+        <Text> {Js.Json.stringifyAny(args)->Belt.Option.getWithDefault("")->React.string} </Text>
+      </Box>
+    | false => React.null
+    }
+}
 
 module Help = {
   @react.component
@@ -41,7 +56,7 @@ module Help = {
 
 module Main = {
   @react.component
-  let make = () => {
+  let make = (~args) => {
     let app = useApp()
 
     useInput((input, _) => {
@@ -50,7 +65,15 @@ module Main = {
       }
     }, ())
 
-    <Box display=#flex justifyContent=#center> <Text> {React.string("Hello GM!")} </Text> </Box>
+    <Box
+      display=#flex
+      flexDirection=#column
+      justifyContent=#center
+      alignItems=#center
+      width=#percent(1.0)
+      height=#percent(1.0)>
+      <Text> {React.string("Hello GM!")} </Text> <Debugger args />
+    </Box>
   }
 }
 
@@ -67,14 +90,14 @@ let args =
     (),
   )
 
-let componentToRender = switch args.help {
-| Some(true) => <Help />
-| Some(false)
-| None =>
-  <Main />
-}
+let showHelp = args.help || args.params[0]->Js.String2.toLowerCase == "help"
 
-Js.Console.log(args.params)
+Js.Console.log2("Args", args)
+
+let componentToRender = switch showHelp {
+| true => <Help />
+| false => <Main args />
+}
 
 let renderResult = render(componentToRender, ~exitOnCtrlC=true, ())
 renderResult.waitUntilExit()->ignore
